@@ -23,5 +23,9 @@ export class AppComponent {
     this.selectedPoint = point;
   }
 
+  onMapViewChanged() {
+    this.selectedPoint = null; 
+  }
+
   title = 'Map';
 }

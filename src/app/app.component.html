@@ -1,4 +1,8 @@
-<app-map [filteredPoints]="filteredPoints" [selectedPoint]="selectedPoint"></app-map>
+<app-map
+  [filteredPoints]="filteredPoints"
+  [selectedPoint]="selectedPoint"
+  (mapViewChanged)="onMapViewChanged()"
+></app-map>
 <app-list
   (pointsFiltered)="onPointsFiltered($event)"
   (pointSelected)="onPointSelected($event)"

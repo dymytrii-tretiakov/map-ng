@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import 'ol/ol.css';
 import Map from 'ol/Map';
 import View from 'ol/View';
@@ -27,6 +27,8 @@ export class MapComponent implements OnInit {
 
   constructor(private pointsService: PointsService) {}
 
+  @Output() mapViewChanged: EventEmitter<void> = new EventEmitter<void>();
+
   @Input() set filteredPoints(points: Point[]) {
     this.updateMap(points); // Update map whenever filtered points are set
   }
@@ -53,6 +55,9 @@ export class MapComponent implements OnInit {
       }),
     });
 
+    this.map.getView().on('change:center', () => this.onMapViewChange());
+    this.map.getView().on('change:resolution', () => this.onMapViewChange());
+
     this.pointsService.getPoints().subscribe((points) => {
       this.updateMap(points);
     });
@@ -61,9 +66,11 @@ export class MapComponent implements OnInit {
   private updateMap(points: Point[]) {
     this.vectorSource.clear();
 
-    points.forEach(point => {
+    points.forEach((point) => {
       const feature = new Feature({
-        geometry: new PointGeometry(fromLonLat([point.longitude, point.latitude])),
+        geometry: new PointGeometry(
+          fromLonLat([point.longitude, point.latitude])
+        ),
         name: point.name,
       });
 
@@ -84,7 +91,11 @@ export class MapComponent implements OnInit {
     this.map?.getView().animate({
       center: fromLonLat([point.longitude, point.latitude]),
       zoom: 10,
-      duration: 1000,
+      duration: 2000,
     });
+  }
+
+  private onMapViewChange() {
+    this.mapViewChanged.emit();
   }
 }
