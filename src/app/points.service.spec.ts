@@ -39,7 +39,7 @@ describe('PointsService', () => {
       expect(points).toEqual(mockPoints);
     });
 
-    const req = httpMock.expectOne(service['baseUrl']); // Match the request to the base URL
+    const req = httpMock.expectOne(service['baseUrl']);
     expect(req.request.method).toBe('GET');
     req.flush(mockPoints);
   });
