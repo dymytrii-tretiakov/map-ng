@@ -7,9 +7,10 @@ import { Point } from './point.interface';
   providedIn: 'root',
 })
 export class PointsService {
-  private baseUrl = 'https://raw.githubusercontent.com/waliot/test-tasks/master/assets/data/frontend-1-dataset.json';
+  private baseUrl =
+    'https://raw.githubusercontent.com/waliot/test-tasks/master/assets/data/frontend-1-dataset.json';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   public getPoints(): Observable<Point[]> {
     return this.http.get<Point[]>(this.baseUrl);

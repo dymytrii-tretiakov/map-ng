@@ -9,15 +9,16 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './list.component.html',
-  styleUrl: './list.component.scss'
+  styleUrls: ['./list.component.scss'], // corrected to 'styleUrls'
 })
 export class ListComponent implements OnInit {
-  private points: Point[] = [];
   public filteredPoints: Point[] = [];
   public searchTerm = '';
 
-  @Output() pointsFiltered: EventEmitter<Point[]> = new EventEmitter<Point[]>();
-  @Output() pointSelected: EventEmitter<Point> = new EventEmitter<Point>();
+  @Output() pointsFiltered = new EventEmitter<Point[]>();
+  @Output() pointSelected = new EventEmitter<Point>();
+
+  private points: Point[] = [];
 
   constructor(private pointsService: PointsService) {}
 
@@ -29,15 +30,11 @@ export class ListComponent implements OnInit {
   }
 
   onSearchChange() {
-    if (!this.searchTerm) {
-      this.filteredPoints = this.points;
-      this.pointsFiltered.emit(this.filteredPoints);
-      return;
-    }
-
-    this.filteredPoints = this.points.filter((point) => {
-      return point.name.toLowerCase().includes(this.searchTerm.toLowerCase());
-    });
+    this.filteredPoints = this.searchTerm
+      ? this.points.filter((point) =>
+          point.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+        )
+      : this.points;
 
     this.pointsFiltered.emit(this.filteredPoints);
   }

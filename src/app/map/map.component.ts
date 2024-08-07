@@ -1,44 +1,51 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import 'ol/ol.css';
 import Map from 'ol/Map';
 import View from 'ol/View';
-import { OSM } from 'ol/source';
 import TileLayer from 'ol/layer/Tile';
-import { Point } from '../point.interface';
-import { PointsService } from '../points.service';
+import { OSM } from 'ol/source';
 import { Feature } from 'ol';
-import { Point as PointGeometry } from 'ol/geom';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
+import { Point as PointGeometry } from 'ol/geom';
 import Style from 'ol/style/Style';
-import { fromLonLat } from 'ol/proj';
 import Icon from 'ol/style/Icon';
+import { fromLonLat } from 'ol/proj';
+import { Point } from '../point.interface';
+import { PointsService } from '../points.service';
 
 @Component({
   selector: 'app-map',
   standalone: true,
-  imports: [],
   templateUrl: './map.component.html',
-  styleUrl: './map.component.scss',
+  styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit {
   public map?: Map;
-  private vectorSource: VectorSource = new VectorSource();
+  private vectorSource = new VectorSource();
 
-  constructor(private pointsService: PointsService) {}
-
-  @Output() mapViewChanged: EventEmitter<void> = new EventEmitter<void>();
+  @Output() mapViewChanged = new EventEmitter<void>();
 
   @Input() set filteredPoints(points: Point[]) {
-    this.updateMap(points); // Update map whenever filtered points are set
+    this.updateMap(points);
   }
+
   @Input() set selectedPoint(point: Point | null) {
     if (point) {
       this.zoomToPoint(point);
     }
   }
 
+  constructor(private pointsService: PointsService) {}
+
   ngOnInit() {
+    this.initializeMap();
+    this.setupMapViewListeners();
+    this.pointsService
+      .getPoints()
+      .subscribe((points) => this.updateMap(points));
+  }
+
+  private initializeMap() {
     this.map = new Map({
       target: 'map',
       layers: [
@@ -54,13 +61,14 @@ export class MapComponent implements OnInit {
         zoom: 2,
       }),
     });
+  }
 
-    this.map.getView().on('change:center', () => this.onMapViewChange());
-    this.map.getView().on('change:resolution', () => this.onMapViewChange());
-
-    this.pointsService.getPoints().subscribe((points) => {
-      this.updateMap(points);
-    });
+  private setupMapViewListeners() {
+    const view = this.map?.getView();
+    if (view) {
+      view.on('change:center', () => this.mapViewChanged.emit());
+      view.on('change:resolution', () => this.mapViewChanged.emit());
+    }
   }
 
   private updateMap(points: Point[]) {
@@ -93,9 +101,5 @@ export class MapComponent implements OnInit {
       zoom: 10,
       duration: 2000,
     });
-  }
-
-  private onMapViewChange() {
-    this.mapViewChanged.emit();
   }
 }

@@ -10,11 +10,21 @@ describe('MapComponent', () => {
   let point2: Point;
 
   beforeEach(async () => {
-    point1 = { id: 1, latitude: 40.73061, longitude: -73.935242, name: 'Point 1' };
-    point2 = { id: 2, latitude: 34.052235, longitude: -118.243683, name: 'Point 2' };
+    point1 = {
+      id: 1,
+      latitude: 40.73061,
+      longitude: -73.935242,
+      name: 'Point 1',
+    };
+    point2 = {
+      id: 2,
+      latitude: 34.052235,
+      longitude: -118.243683,
+      name: 'Point 2',
+    };
 
     await TestBed.configureTestingModule({
-      declarations: [MapComponent]
+      declarations: [MapComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(MapComponent);

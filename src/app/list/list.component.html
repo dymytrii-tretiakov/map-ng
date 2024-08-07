@@ -10,8 +10,11 @@
     (input)="onSearchChange()"
   />
   <ul class="list__container">
-
-    <li class="list__item" *ngFor="let point of filteredPoints" (click)="onSelectPoint(point)">
+    <li
+      class="list__item"
+      *ngFor="let point of filteredPoints"
+      (click)="onSelectPoint(point)"
+    >
       <img src="assets/car.png" alt="car" />
       {{ point.name }}
     </li>

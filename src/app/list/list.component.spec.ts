@@ -24,9 +24,7 @@ describe('ListComponent', () => {
     await TestBed.configureTestingModule({
       imports: [CommonModule, FormsModule],
       declarations: [ListComponent],
-      providers: [
-        { provide: PointsService, useValue: mockPointsService }
-      ]
+      providers: [{ provide: PointsService, useValue: mockPointsService }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ListComponent);

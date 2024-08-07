@@ -1,9 +1,6 @@
 export interface Point {
-  id: number
-  // Широта
-  latitude: number
-  // Долгота
-  longitude: number
-  // Имя
-  name: string
+  id: number;
+  latitude: number;
+  longitude: number;
+  name: string;
 }

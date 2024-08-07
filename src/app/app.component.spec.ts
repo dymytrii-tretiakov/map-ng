@@ -13,11 +13,21 @@ describe('AppComponent', () => {
   let point2: Point;
 
   beforeEach(async () => {
-    point1 = { id: 1, latitude: 40.73061, longitude: -73.935242, name: 'Point 1' };
-    point2 = { id: 2, latitude: 34.052235, longitude: -118.243683, name: 'Point 2' };
+    point1 = {
+      id: 1,
+      latitude: 40.73061,
+      longitude: -73.935242,
+      name: 'Point 1',
+    };
+    point2 = {
+      id: 2,
+      latitude: 34.052235,
+      longitude: -118.243683,
+      name: 'Point 2',
+    };
 
     await TestBed.configureTestingModule({
-      declarations: [AppComponent, ListComponent, MapComponent]
+      declarations: [AppComponent, ListComponent, MapComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AppComponent);
@@ -58,7 +68,9 @@ describe('AppComponent', () => {
     component.onPointsFiltered([point1]);
     fixture.detectChanges();
 
-    const mapComponent = fixture.debugElement.query(By.directive(MapComponent)).componentInstance;
+    const mapComponent = fixture.debugElement.query(
+      By.directive(MapComponent)
+    ).componentInstance;
     expect(mapComponent.filteredPoints).toEqual([point1]);
   });
 
@@ -66,13 +78,17 @@ describe('AppComponent', () => {
     component.onPointSelected(point1);
     fixture.detectChanges();
 
-    const mapComponent = fixture.debugElement.query(By.directive(MapComponent)).componentInstance;
+    const mapComponent = fixture.debugElement.query(
+      By.directive(MapComponent)
+    ).componentInstance;
     expect(mapComponent.selectedPoint).toEqual(point1);
   });
 
   it('should call onPointsFiltered when pointsFiltered event is emitted from ListComponent', () => {
     spyOn(component, 'onPointsFiltered');
-    const listComponentDebug: DebugElement = fixture.debugElement.query(By.directive(ListComponent));
+    const listComponentDebug: DebugElement = fixture.debugElement.query(
+      By.directive(ListComponent)
+    );
     const listComponent = listComponentDebug.componentInstance as ListComponent;
 
     listComponent.pointsFiltered.emit([point1, point2]);
@@ -81,7 +97,9 @@ describe('AppComponent', () => {
 
   it('should call onPointSelected when pointSelected event is emitted from ListComponent', () => {
     spyOn(component, 'onPointSelected');
-    const listComponentDebug: DebugElement = fixture.debugElement.query(By.directive(ListComponent));
+    const listComponentDebug: DebugElement = fixture.debugElement.query(
+      By.directive(ListComponent)
+    );
     const listComponent = listComponentDebug.componentInstance as ListComponent;
 
     listComponent.pointSelected.emit(point1);
@@ -90,7 +108,9 @@ describe('AppComponent', () => {
 
   it('should call onMapViewChanged when mapViewChanged event is emitted from MapComponent', () => {
     spyOn(component, 'onMapViewChanged');
-    const mapComponentDebug: DebugElement = fixture.debugElement.query(By.directive(MapComponent));
+    const mapComponentDebug: DebugElement = fixture.debugElement.query(
+      By.directive(MapComponent)
+    );
     const mapComponent = mapComponentDebug.componentInstance as MapComponent;
 
     mapComponent.mapViewChanged.emit();
