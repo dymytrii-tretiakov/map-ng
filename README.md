@@ -1,27 +1,76 @@
-# Map
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.2.
+# Angular Map and List Application
 
-## Development server
+## Overview
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+This project is an Angular-based application that integrates a map and a list of points. Users can filter points through a search input, select a point from the list to zoom the map to the selected location, and interact with the map to view and clear selected points.
 
-## Code scaffolding
+## Features
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Map Integration**: Displays points on a map using OpenLayers.
+- **Search and Filter**: Users can filter the list of points using a search input.
+- **Point Selection**: Clicking on a list item zooms the map to the corresponding point.
+- **Map Interaction**: Moving or zooming the map clears the selected point.
 
-## Build
+## Installation
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/yourusername/your-repo-name.git
+   cd your-repo-name
+   ```
 
-## Running unit tests
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+3. **Run the application**:
+   ```bash
+   npm start
+   ```
 
-## Running end-to-end tests
+4. **Run tests**:
+   ```bash
+   npm run test
+   ```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Project Structure
 
-## Further help
+- **app.component.ts**: The root component that integrates the map and list components.
+- **map.component.ts**: Displays the map and handles map-related interactions.
+- **list.component.ts**: Displays a list of points and allows filtering and selection.
+- **points.service.ts**: Fetches points data from an external API.
+- **point.interface.ts**: Defines the `Point` interface used across components.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Usage
+
+1. **Search and Filter**:
+   - Use the search input to filter points by name. The list and map will update accordingly.
+
+2. **Select a Point**:
+   - Click on any list item to zoom the map to that point.
+
+3. **Map Interaction**:
+   - Move or zoom the map, and the selected point will be cleared.
+
+## Testing
+
+This project uses Jasmine and Karma for unit testing. To run the tests, use the following command:
+
+```bash
+npm run test
+```
+
+The tests cover:
+- Component creation and initialization
+- Event handling and interactions between components
+- Service methods and HTTP requests
+
+## Dependencies
+
+- **Angular**: Frontend framework.
+- **OpenLayers**: Library for map visualization.
+- **RxJS**: Reactive extensions for asynchronous programming with observables.
+- **Karma**: Test runner.
+- **Jasmine**: Testing framework.
